@@ -29,6 +29,17 @@ namespace TwainConsoleDemo
                         }
                     }
 
+                    // if 64-bit TWAIN2 device manager is used
+                    if (IntPtr.Size == 8 && deviceManager.IsTwain2Compatible)
+                    {
+                        Console.Write("Use 32-bit devices in 64-bit TWAIN2 device manager (Y = yes, N = no)? ");
+                        char key = Console.ReadKey().KeyChar;
+
+                        if (key == 'y' || key == 'Y')
+                            deviceManager.Use32BitDevices();
+                        Console.WriteLine();
+                    }
+
                     // open the device manager
                     deviceManager.Open();
 
