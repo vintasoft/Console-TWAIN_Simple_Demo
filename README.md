@@ -3,7 +3,7 @@
 Demo application shows how to acquire images from scanner in console application. Demo uses functionality of <a href="http://www.vintasoft.com/vstwain-dotnet-index.html">VintaSoft Twain .NET SDK</a>. Source codes for C# and VB.NET are available.
 
 <h2>Screenshot</h2>
-<img src=http://www.vintasoft.com/images/screenshots/twain/vintasoft-twain-console-demo.png alt="VintaSoft TWAIN Console Demo">
+<img src="vintasoft-twain-console-demo.png" alt="VintaSoft TWAIN Console Demo">
 
 
 <h2>Download</h2>
