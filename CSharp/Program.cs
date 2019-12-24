@@ -1,5 +1,7 @@
-using System;
+﻿using System;
+using System.ComponentModel;
 using System.IO;
+
 using Vintasoft.Twain;
 
 namespace TwainConsoleDemo
@@ -11,6 +13,8 @@ namespace TwainConsoleDemo
         {
             try
             {
+                VintasoftTwain.VintasoftTwainLicense.Register();
+
                 // create TWAIN device manager
                 using (DeviceManager deviceManager = new DeviceManager())
                 {
@@ -121,11 +125,75 @@ namespace TwainConsoleDemo
             }
             catch (TwainException ex)
             {
-                Console.WriteLine("Error: " + ex.Message);
+                Console.WriteLine("Error: " + GetFullExceptionMessage(ex));
+            }
+            catch (Exception e)
+            {
+                System.ComponentModel.LicenseException licenseException = GetLicenseException(e);
+                if (licenseException != null)
+                {
+                    // show information about licensing exception
+                    Console.WriteLine("{0}: {1}", licenseException.GetType().Name, licenseException.Message);
+
+                    string[] dirs = new string[] { ".", "..", @"..\..\..\", @"..\..\..\..\..\", @"..\..\..\..\..\..\..\" };
+                    // for each directory
+                    for (int i = 0; i < dirs.Length; i++)
+                    {
+                        string filename = System.IO.Path.Combine(dirs[i], "VSTwainNetEvaluationLicenseManager.exe");
+                        // if VintaSoft Evaluation License Manager exists in directory
+                        if (System.IO.File.Exists(filename))
+                        {
+                            // start Vintasoft Evaluation License Manager for getting the evaluation license
+                            System.Diagnostics.Process process = new System.Diagnostics.Process();
+                            process.StartInfo.FileName = filename;
+                            process.Start();
+                        }
+                    }
+                }
+                else
+                {
+                    throw;
+                }
             }
 
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
+        }
+
+        /// <summary>
+        /// Returns the message of exception and inner exceptions.
+        /// </summary>
+        private static string GetFullExceptionMessage(Exception ex)
+        {
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            sb.AppendLine(ex.Message);
+
+            Exception innerException = ex.InnerException;
+            while (innerException != null)
+            {
+                if (ex.Message != innerException.Message)
+                    sb.AppendLine(string.Format("Inner exception: {0}", innerException.Message));
+                innerException = innerException.InnerException;
+            }
+
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Returns the license exception from specified exception.
+        /// </summary>
+        /// <param name="exceptionObject">The exception object.</param>
+        /// <returns>Instance of <see cref="LicenseException"/>.</returns>
+        private static System.ComponentModel.LicenseException GetLicenseException(object exceptionObject)
+        {
+            Exception ex = exceptionObject as Exception;
+            if (ex == null)
+                return null;
+            if (ex is System.ComponentModel.LicenseException)
+                return (System.ComponentModel.LicenseException)exceptionObject;
+            if (ex.InnerException != null)
+                return GetLicenseException(ex.InnerException);
+            return null;
         }
 
     }
