@@ -79,7 +79,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Vintasoft.Twain" Version="11.0.0.3" />
+    <PackageReference Include="Vintasoft.Twain" Version="11.0.1.1" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -88,10 +88,6 @@
     <Content Include="App.ico" />
     <None Include="Resources\Net\VintasoftTwainService.exe">
       <Link>VintasoftTwainService.exe</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\VSTwainNetEvaluationLicenseManager.exe">
-      <Link>VSTwainNetEvaluationLicenseManager.exe</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="_readme.txt" />

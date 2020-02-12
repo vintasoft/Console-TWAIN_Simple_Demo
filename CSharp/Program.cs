@@ -135,7 +135,7 @@ namespace TwainConsoleDemo
                     // show information about licensing exception
                     Console.WriteLine("{0}: {1}", licenseException.GetType().Name, licenseException.Message);
 
-                    string[] dirs = new string[] { ".", "..", @"..\..\..\", @"..\..\..\..\..\", @"..\..\..\..\..\..\..\" };
+                    string[] dirs = new string[] { ".", "..", @"..\..\", @"..\..\..\", @"..\..\..\..\..\", @"..\..\..\..\..\..\..\" };
                     // for each directory
                     for (int i = 0; i < dirs.Length; i++)
                     {

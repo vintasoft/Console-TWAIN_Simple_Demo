@@ -49,7 +49,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.Drawing.Common" Version="4.6.0" />
-    <PackageReference Include="Vintasoft.Twain" Version="11.0.0.3" />
+    <PackageReference Include="Vintasoft.Twain" Version="11.0.1.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -67,10 +67,6 @@
     </None>
     <None Include="Resources\NetCore\VintasoftTwainService.runtimeconfig.json">
       <Link>VintasoftTwainService.runtimeconfig.json</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\VSTwainNetEvaluationLicenseManager.exe">
-      <Link>VSTwainNetEvaluationLicenseManager.exe</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="_readme.txt" />
