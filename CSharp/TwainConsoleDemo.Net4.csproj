@@ -84,7 +84,6 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VintasoftTwainLicense.cs" />
     <Content Include="App.ico" />
     <None Include="Resources\Net\VintasoftTwainService.exe">
       <Link>VintasoftTwainService.exe</Link>
