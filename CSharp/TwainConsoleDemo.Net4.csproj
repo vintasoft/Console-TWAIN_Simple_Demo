@@ -79,7 +79,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Vintasoft.Twain" Version="12.0.9.1" />
+    <PackageReference Include="Vintasoft.Twain" Version="12.0.10.1" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
