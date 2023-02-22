@@ -15,59 +15,30 @@ namespace TwainConsoleDemo
                 // create TWAIN device manager
                 using (DeviceManager deviceManager = new DeviceManager())
                 {
-                    // try to use TWAIN device manager 2.x
-                    deviceManager.IsTwain2Compatible = true;
-                    // if TWAIN device manager 2.x is not available
-                    if (!deviceManager.IsTwainAvailable)
-                    {
-                        // try to use TWAIN device manager 1.x
-                        deviceManager.IsTwain2Compatible = false;
-                        // if TWAIN device manager 1.x is not available
-                        if (!deviceManager.IsTwainAvailable)
-                        {
-                            Console.WriteLine("TWAIN device manager is not available.");
-                            return;
-                        }
-                    }
-
-                    // if 64-bit TWAIN2 device manager is used
-                    if (IntPtr.Size == 8 && deviceManager.IsTwain2Compatible)
-                    {
-                        Console.Write("Use 32-bit devices in 64-bit TWAIN2 device manager (Y = yes, N = no)? ");
-                        char key = Console.ReadKey().KeyChar;
-
-                        if (key == 'y' || key == 'Y')
-                            deviceManager.Use32BitDevices();
-                        Console.WriteLine();
-                    }
-
-                    // open the device manager
-                    deviceManager.Open();
-
-                    // if no devices are found in the system
-                    if (deviceManager.Devices.Count == 0)
-                    {
-                        Console.WriteLine("Devices are not found.");
+                    // open TWAIN device manager
+                    if (!OpenDeviceManager(deviceManager))
                         return;
-                    }
 
-                    // select the device
-                    deviceManager.ShowDefaultDeviceSelectionDialog();
+                    // select TWAIN device
+                    Device device = SelectDevice(deviceManager);
+                    // if device is not selected
+                    if (device == null)
+                        return;
 
-                    // get reference to the current device
-                    Device device = deviceManager.DefaultDevice;
-
+                    // specify that device UI should not be shown
                     device.ShowUI = false;
+                    // specify that image scanning progess UI should not be shown
+                    device.ShowIndicators = false;
+                    // specify that device must be disabled after image scan
                     device.DisableAfterAcquire = true;
 
                     // open the device
                     device.Open();
 
-                    // set acquisition parameters
-                    if (device.TransferMode != TransferMode.Native)
-                        device.TransferMode = TransferMode.Native;
-                    if (device.PixelType != PixelType.BW)
-                        device.PixelType = PixelType.BW;
+                    // set device parameters
+                    device.TransferMode = TransferMode.Native;
+                    device.PixelType = PixelType.BW;
+                    device.XferCount = 1;
 
                     // create directory for TIFF file
                     string directoryForImages = Path.GetDirectoryName(Directory.GetCurrentDirectory());
@@ -149,7 +120,98 @@ namespace TwainConsoleDemo
         }
 
         /// <summary>
-        /// Returns the message of exception and inner exceptions.
+        /// Opens the TWAIN device manager.
+        /// </summary>
+        /// <param name="deviceManager">Device manager.</param>
+        /// <returns><b>True</b> - device manager is opened successfully; otherwise, <b>false</b>.</returns>
+        private static bool OpenDeviceManager(DeviceManager deviceManager)
+        {
+            // try to use TWAIN device manager 2.x
+            deviceManager.IsTwain2Compatible = true;
+            // if TWAIN device manager 2.x is not available
+            if (!deviceManager.IsTwainAvailable)
+            {
+                // if application is executed in Windows
+                if (TwainEnvironment.OsPlatform == OsPlatform.Windows)
+                {
+                    // try to use TWAIN device manager 1.x
+                    deviceManager.IsTwain2Compatible = false;
+                    // if TWAIN device manager 1.x is not available
+                    if (!deviceManager.IsTwainAvailable)
+                    {
+                        Console.WriteLine("TWAIN device manager is not available.");
+                        return false;
+                    }
+                }
+                // if application is executed in Linux or macOS
+                else
+                {
+                    Console.WriteLine("TWAIN device manager is not available.");
+                    return false;
+                }
+            }
+
+            char key;
+            // if application is executed in Windows
+            if (TwainEnvironment.OsPlatform == OsPlatform.Windows)
+            {
+                // if 64-bit TWAIN2 device manager is used
+                if (IntPtr.Size == 8 && deviceManager.IsTwain2Compatible)
+                {
+                    Console.Write("Do you want to use 32-bit devices in 64-bit TWAIN2 device manager (Y = yes, N = no)? ");
+                    key = Console.ReadKey().KeyChar;
+
+                    if (key == 'y' || key == 'Y')
+                        deviceManager.Use32BitDevices();
+                    Console.WriteLine();
+                    Console.WriteLine();
+                }
+            }
+
+            // open the device manager
+            deviceManager.Open();
+
+            return true;
+        }
+
+        /// <summary>
+        /// Selects the TWAIN device.
+        /// </summary>
+        /// <param name="deviceManager">TWAIN device manager.</param>
+        /// <returns>TWAIN device if device is selected; otherwiase, <b>null</b>.</returns>
+        private static Device SelectDevice(DeviceManager deviceManager)
+        {
+            int deviceCount = deviceManager.Devices.Count;
+            // if no devices are found in the system
+            if (deviceCount == 0)
+            {
+                Console.WriteLine("Devices are not found.");
+                return null;
+            }
+
+            Console.WriteLine("Device list:");
+            for (int i = 0; i < deviceCount; i++)
+            {
+                Console.WriteLine(string.Format("{0}. {1}", i + 1, deviceManager.Devices[i].Info.ProductName));
+            }
+
+            int deviceIndex = -1;
+            while (deviceIndex < 0 || deviceIndex > deviceCount)
+            {
+                Console.Write(string.Format("Please select device by entering the device number from '1' to '{0}' or press '0' to cancel: ", deviceCount));
+                deviceIndex = Console.ReadKey().KeyChar - '0';
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+
+            if (deviceIndex == 0)
+                return null;
+
+            return deviceManager.Devices[deviceIndex - 1];
+        }
+
+        /// <summary>
+        /// Returns message that contains information about exception and inner exceptions.
         /// </summary>
         private static string GetFullExceptionMessage(Exception ex)
         {

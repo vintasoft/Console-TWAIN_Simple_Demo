@@ -48,8 +48,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
-    <PackageReference Include="Vintasoft.Twain" Version="12.2.3.1" />
+    <PackageReference Include="Vintasoft.Shared" Version="3.4.0.1" />
+    <PackageReference Include="Vintasoft.Twain" Version="14.0.0.1" />
   </ItemGroup>
 
   <ItemGroup>
