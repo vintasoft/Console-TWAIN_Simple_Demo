@@ -10,6 +10,9 @@ namespace TwainConsoleDemo
 
         static void Main(string[] args)
         {
+            // register the evaluation license for VintaSoft TWAIN .NET SDK
+            Vintasoft.Twain.TwainGlobalSettings.Register("REG_USER", "REG_EMAIL", "EXPIRATION_DATE", "REG_CODE");
+
             try
             {
                 // create TWAIN device manager

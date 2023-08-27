@@ -1,18 +1,31 @@
-<h1>VintaSoft Console TWAIN Simple Demo</h1>
+# VintaSoft Console TWAIN Simple Demo
 
-Demo application shows how to acquire images from scanner in console application. Demo uses functionality of <a href="http://www.vintasoft.com/vstwain-dotnet-index.html">VintaSoft Twain .NET SDK</a>. Source codes for C# and VB.NET are available.
+This .NET console project uses <a href="https://www.vintasoft.com/vstwain-dotnet-index.html">VintaSoft TWAIN .NET SDK</a> and demonstrates how to acquire images from TWAIN scanner in console application.
 
-<h2>Screenshot</h2>
+
+## Screenshot
 <img src="vintasoft-twain-console-demo.png" alt="VintaSoft TWAIN Console Demo">
 
 
-<h2>Download</h2>
-VintaSoft Twain .NET SDK distributive package can be downloaded here: http://www.vintasoft.com/download.html
+## Usage
+1. Get the 30 day free evaluation license for <a href="https://www.vintasoft.com/vstwain-dotnet-index.html" target="_blank">VintaSoft TWAIN .NET SDK</a> as described here: <a href="https://www.vintasoft.com/docs/vstwain-dotnet/Licensing-Twain-Evaluation.html" target="_blank">https://www.vintasoft.com/docs/vstwain-dotnet/Licensing-Twain-Evaluation.html</a>
+
+2. Update the evaluation license in "CSharp\Program.cs" file:
+   ```
+   Vintasoft.Twain.TwainGlobalSettings.Register("REG_USER", "REG_EMAIL", "EXPIRATION_DATE", "REG_CODE");
+   ```
+
+3. Build the project ("TwainConsoleDemo.Net7.csproj" file) in Visual Studio or using .NET CLI:
+   ```
+   dotnet build TwainConsoleDemo.Net7.csproj
+   ```
+
+4. Run compiled application.
 
 
-<h2>Documentation</h2>
-VintaSoft Twain .NET SDK on-line User Guide and API Reference is available here: http://www.vintasoft.com/docs/vstwain-dotnet/
+## Documentation
+VintaSoft TWAIN .NET SDK on-line User Guide and API Reference for .NET developer is available here: https://www.vintasoft.com/docs/vstwain-dotnet/
 
 
-<h2>Support</h2>
+## Support
 Please visit our <a href="https://myaccount.vintasoft.com/">online support center</a> if you have any question or problem.
