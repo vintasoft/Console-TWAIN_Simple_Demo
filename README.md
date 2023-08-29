@@ -4,7 +4,7 @@ This .NET console project uses <a href="https://www.vintasoft.com/vstwain-dotnet
 
 
 ## Screenshot
-<img src="vintasoft-twain-console-demo.png" alt="VintaSoft TWAIN Console Demo">
+<img src="vintasoft-twain-console-demo.png" title="VintaSoft TWAIN Console Demo">
 
 
 ## Usage
