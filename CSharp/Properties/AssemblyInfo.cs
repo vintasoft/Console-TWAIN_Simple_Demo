@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("VintaSoft Ltd.")]
 [assembly: AssemblyProduct("TwainConsoleDemo")]
-[assembly: AssemblyCopyright("Copyright VintaSoft Ltd. 2023")]
+[assembly: AssemblyCopyright("Copyright VintaSoft Ltd. 2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
