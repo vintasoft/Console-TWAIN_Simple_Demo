@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <Platforms>AnyCPU;x64;x86</Platforms>
     <AssemblyName>TwainConsole</AssemblyName>
 
@@ -56,15 +56,15 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="App.ico" />
-    <None Include="Resources\DotNet6\VintasoftTwainService.dll">
+    <None Include="Resources\DotNet8\VintasoftTwainService.dll">
       <Link>VintasoftTwainService.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\DotNet6\VintasoftTwainService.exe">
+    <None Include="Resources\DotNet8\VintasoftTwainService.exe">
       <Link>VintasoftTwainService.exe</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\DotNet6\VintasoftTwainService.runtimeconfig.json">
+    <None Include="Resources\DotNet8\VintasoftTwainService.runtimeconfig.json">
       <Link>VintasoftTwainService.runtimeconfig.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
