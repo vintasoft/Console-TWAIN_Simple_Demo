@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Platforms>AnyCPU;x64;x86</Platforms>
     <AssemblyName>TwainConsole</AssemblyName>
 
@@ -48,23 +48,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Vintasoft.Shared" Version="4.5.0.1" />
-    <PackageReference Include="Vintasoft.Twain" Version="15.2.2.1" />
+    <PackageReference Include="Vintasoft.Shared" Version="4.6.0.1" />
+    <PackageReference Include="Vintasoft.Twain" Version="15.3.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="App.ico" />
-    <None Include="Resources\DotNet7\VintasoftTwainService.dll">
+    <None Include="Resources\DotNet10\VintasoftTwainService.dll">
       <Link>VintasoftTwainService.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\DotNet7\VintasoftTwainService.exe">
+    <None Include="Resources\DotNet10\VintasoftTwainService.exe">
       <Link>VintasoftTwainService.exe</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\DotNet7\VintasoftTwainService.runtimeconfig.json">
+    <None Include="Resources\DotNet10\VintasoftTwainService.runtimeconfig.json">
       <Link>VintasoftTwainService.runtimeconfig.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -10,9 +10,6 @@ namespace TwainConsoleDemo
 
         static void Main(string[] args)
         {
-            // register the evaluation license for VintaSoft TWAIN .NET SDK
-            Vintasoft.Twain.TwainGlobalSettings.Register("REG_USER", "REG_EMAIL", "EXPIRATION_DATE", "REG_CODE");
-
             try
             {
                 // create TWAIN device manager
@@ -129,62 +126,91 @@ namespace TwainConsoleDemo
         /// <returns><b>True</b> - device manager is opened successfully; otherwise, <b>false</b>.</returns>
         private static bool OpenDeviceManager(DeviceManager deviceManager)
         {
-            // get path to the TWAIN device manager 2.x from installation of VintaSoft TWAIN .NET SDK
-            string twainDsmDllCustomPath = GetTwainDsmCustomPath(IntPtr.Size == 4);
-            // if file exist
-            if (twainDsmDllCustomPath != null)
-                // specify that SDK should use TWAIN device manager 2.x from installation of VintaSoft TWAIN .NET SDK
-                deviceManager.TwainDllPath = twainDsmDllCustomPath;
+            // 0 - 32-bit TWAIN1 device manager; 1 - 32-bit TWAIN2 device manager; 2 - 64-bit TWAIN2 device manager.
+            int twainDeviceManagerType = -1;
 
-            // try to use TWAIN device manager 2.x
-            deviceManager.IsTwain2Compatible = true;
-            // if TWAIN device manager 2.x is not available
-            if (!deviceManager.IsTwainAvailable)
+            char key;
+            // if application is running on 32-bit Windows
+            if (IntPtr.Size == 4)
             {
-                // if application is executed in Windows
+                Console.Write("Do you want to use 32-bit TWAIN1 device manager (press '1') or 32-bit TWAIN2 device manager (press '2')? ");
+                do
+                {
+                    key = Console.ReadKey().KeyChar;
+                }
+                while (key != '1' && key != '2');
+                if (key == '1')
+                    twainDeviceManagerType = 0;
+                else
+                    twainDeviceManagerType = 1;
+            }
+            // if application is running on 64-bit Windows or Linux
+            else
+            {
+                // if application is running on 64-bit Windows
                 if (TwainEnvironment.OsPlatform == OsPlatform.Windows)
                 {
-                    // try to use TWAIN device manager 1.x
-                    deviceManager.IsTwain2Compatible = false;
-                    // if TWAIN device manager 1.x is not available
-                    if (!deviceManager.IsTwainAvailable)
+                    Console.Write("Do you want to use 32-bit TWAIN2 device manager (press '1') or 64-bit TWAIN2 device manager (press '2')? ");
+                    do
                     {
-                        Console.WriteLine("TWAIN device manager is not available.");
-                        return false;
+                        key = Console.ReadKey().KeyChar;
                     }
+                    while (key != '1' && key != '2');
+                    if (key == '1')
+                        twainDeviceManagerType = 1;
+                    else
+                        twainDeviceManagerType = 2;
                 }
-                // if application is executed in Linux or macOS
+                // if application is running on 64-bit Linux
                 else
                 {
-                    Console.WriteLine("TWAIN device manager is not available.");
-                    return false;
+                    twainDeviceManagerType = 2;
                 }
             }
 
-            char key;
-            // if application is executed in Windows
-            if (TwainEnvironment.OsPlatform == OsPlatform.Windows)
+            string twainDsmDllCustomPath;
+            switch (twainDeviceManagerType)
             {
-                // if 64-bit TWAIN2 device manager is used
-                if (IntPtr.Size == 8 && deviceManager.IsTwain2Compatible)
-                {
-                    Console.Write("Do you want to use 32-bit devices in 64-bit TWAIN2 device manager (Y = yes, N = no)? ");
-                    key = Console.ReadKey().KeyChar;
+                case 0:
+                    // try to use 32-bit TWAIN1 device manager
+                    deviceManager.IsTwain2Compatible = false;
+                    break;
 
-                    if (key == 'y' || key == 'Y')
-                    {
-                        // get path to the TWAIN device manager 2.x from installation of VintaSoft TWAIN .NET SDK
-                        twainDsmDllCustomPath = GetTwainDsmCustomPath(true);
-                        // if file exist
-                        if (twainDsmDllCustomPath != null)
-                            // specify that SDK should use TWAIN device manager 2.x from installation of VintaSoft TWAIN .NET SDK
-                            deviceManager.TwainDllPath = twainDsmDllCustomPath;
+                case 1:
+                    // get path to the TWAIN device manager 2.x from installation of VintaSoft TWAIN .NET SDK
+                    twainDsmDllCustomPath = GetTwainDsmCustomPath(true);
+                    // if file exist
+                    if (twainDsmDllCustomPath != null)
+                        // specify that SDK should use TWAIN device manager 2.x from installation of VintaSoft TWAIN .NET SDK
+                        deviceManager.TwainDllPath = twainDsmDllCustomPath;
 
+                    deviceManager.IsTwain2Compatible = true;
+
+                    // if application is running on 64-bit Windows
+                    if (IntPtr.Size == 8)
+                    { 
                         deviceManager.Use32BitDevices();
                     }
-                    Console.WriteLine();
-                    Console.WriteLine();
-                }
+                    break;
+
+                case 2:
+                    // get path to the TWAIN device manager 2.x from installation of VintaSoft TWAIN .NET SDK
+                    twainDsmDllCustomPath = GetTwainDsmCustomPath(false);
+                    // if file exist
+                    if (twainDsmDllCustomPath != null)
+                        // specify that SDK should use TWAIN device manager 2.x from installation of VintaSoft TWAIN .NET SDK
+                        deviceManager.TwainDllPath = twainDsmDllCustomPath;
+
+                    // try to use 64-bit TWAIN2 device manager
+                    deviceManager.IsTwain2Compatible = true;
+                    break;
+            }
+
+            // if TWAIN device manager is not available
+            if (!deviceManager.IsTwainAvailable)
+            {
+                Console.WriteLine("TWAIN device manager is not available.");
+                return false;
             }
 
             // open the device manager
@@ -217,9 +243,9 @@ namespace TwainConsoleDemo
             int deviceIndex = -1;
             while (deviceIndex < 0 || deviceIndex > deviceCount)
             {
-                Console.Write(string.Format("Please select device by entering the device number from '1' to '{0}' or press '0' to cancel: ", deviceCount));
-                deviceIndex = Console.ReadKey().KeyChar - '0';
-                Console.WriteLine();
+                Console.Write(string.Format("Please select device by entering the device number from '1' to '{0}' ('0' to cancel) and press 'Enter' key: ", deviceCount));
+                string deviceIndexString = Console.ReadLine();
+                int.TryParse(deviceIndexString, out deviceIndex);
             }
             Console.WriteLine();
 
