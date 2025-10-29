@@ -80,7 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Vintasoft.Shared" Version="4.6.0.1" />
-    <PackageReference Include="Vintasoft.Twain" Version="15.3.0.1" />
+    <PackageReference Include="Vintasoft.Twain" Version="15.3.1.1" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
