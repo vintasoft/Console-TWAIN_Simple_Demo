@@ -48,8 +48,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Vintasoft.Shared" Version="4.6.1.1" />
-    <PackageReference Include="Vintasoft.Twain" Version="15.3.8.1" />
+    <PackageReference Include="Vintasoft.Shared" Version="4.6.2.1" />
+    <PackageReference Include="Vintasoft.Twain" Version="15.3.9.1" />
   </ItemGroup>
 
   <ItemGroup>
