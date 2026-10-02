@@ -234,6 +234,8 @@ namespace TwainConsoleDemo
                 return null;
             }
 
+            Console.WriteLine();
+            Console.WriteLine();
             Console.WriteLine("Device list:");
             for (int i = 0; i < deviceCount; i++)
             {
@@ -302,7 +304,7 @@ namespace TwainConsoleDemo
             if (use32BitDevice)
                 twainFolderName = "TWAINDSM32";
 
-            string[] binFolderPaths = { @"..\..\Bin", @"..\..\..\..\..\Bin", @"..\..\..\..\..\..\Bin" };
+            string[] binFolderPaths = { @"..\..", @"..\..\Bin", @"..\..\..\..\..\Bin", @"..\..\..\..\..\..\Bin" };
             string binFolderPath = null;
             for (int i = 0; i < binFolderPaths.Length; i++)
             {

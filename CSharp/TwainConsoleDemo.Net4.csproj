@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TwainConsoleDemo</RootNamespace>
     <AssemblyName>TwainConsole</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ApplicationIcon>App.ico</ApplicationIcon>
   </PropertyGroup>
@@ -74,11 +74,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Vintasoft.Shared" Version="4.7.0.1" />
     <PackageReference Include="Vintasoft.Twain" Version="15.5.0.1" />
   </ItemGroup>
