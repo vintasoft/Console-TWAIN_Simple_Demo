@@ -16,7 +16,7 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>    
 
-    <Version>15.5.0.1</Version>
+    <Version>15.5.1.1</Version>
     <ApplicationIcon>App.ico</ApplicationIcon>
   </PropertyGroup>
 
@@ -52,7 +52,7 @@
 
   <ItemGroup>
     <PackageReference Include="Vintasoft.Shared" Version="4.7.0.1" />
-    <PackageReference Include="Vintasoft.Twain" Version="15.5.0.1" />
+    <PackageReference Include="Vintasoft.Twain" Version="15.5.1.1" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
